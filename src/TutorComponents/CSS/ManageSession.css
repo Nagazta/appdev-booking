@@ -1,3 +1,4 @@
+/* General Styles */
 .manage-session-container {
     width: 100%;
     display: flex;
@@ -27,37 +28,37 @@
     margin-right: auto;
 }
 
+/* Filters and Dropdown */
 .manage-filters {
     display: flex;
     gap: 15px;
     margin-bottom: 40px;
 }
 
-/* Dropdown */
 .dropdown {
     position: relative;
     display: inline-block;
-    width: 200px; /* Slightly increased width */
+    width: 200px;
 }
 
 .dropbtn {
     background-color: #F8C400;
     color: #89343B;
-    padding: 12px 20px; /* Adjusted padding */
+    padding: 12px 20px;
     border: none;
     border-radius: 12px;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
-    width: 100%; /* Full width of the dropdown */
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease;
 }
 
 .dropbtn:hover {
-    background-color: #e0a800; /* Hover effect */
+    background-color: #e0a800;
 }
 
 .caret {
@@ -101,7 +102,7 @@
     color: #fff;
 }
 
-/* Cards */
+/* Session Cards */
 .session-cards {
     display: flex;
     gap: 30px;
@@ -179,4 +180,97 @@
 
 .page-btn:hover {
     background-color: #e0a800;
+}
+
+/* Payment Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 300px;
+}
+
+/* Payment Status Styling */
+.payment-status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.payment-status.completed {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: #2e7d32;
+}
+
+.payment-status.pending {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ef6c00;
+}
+
+.payment-status.failed {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+}
+
+.payment-status.no-payment {
+    background-color: rgba(158, 158, 158, 0.1);
+    color: #616161;
+}
+
+/* Modal Styles */
+.payment-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.payment-modal h3 {
+    margin-top: 0;
+    color: #333;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .session-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .session-card strong {
+        width: 90px;
+    }
+    
+    .session-card input,
+    .session-card select {
+        width: calc(100% - 100px);
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+    }
+    
+    .payment-input {
+        width: 100%;
+    }
 }
