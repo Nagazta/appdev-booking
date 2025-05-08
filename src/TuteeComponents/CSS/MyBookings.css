@@ -1,18 +1,27 @@
 .my-bookings-container {
   max-width: 1200px;
-  margin: 80px auto;         /* Center horizontally */
-  padding: 20px;
-  background-color: #7b2d2f;
-  border-radius: 30px;
-  border: 3px solid #fce088
+  margin: 80px auto;
+  padding: 25px;
+  background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+  border-radius: 25px;
+  border: 2px solid #fce088;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px); /* Optional blur for a glass effect */
 }
 
 .my-bookings-container h1 {
-  color: white;
+  color: #7b2d2f;
   margin-bottom: 20px;
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -20,38 +29,44 @@
   background-color: #fce088;
   border: none;
   padding: 10px 20px;
-  margin-right: 10px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-buttons button:hover {
+  background-color: #ffd860;
+  transform: translateY(-2px);
 }
 
 .bookings-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .booking-card {
-  border: 1px solid #d9a9a9;
-  padding: 15px;
-  border-radius: 10px;
-  width: 250px;
-  background-color: #fff;
+  border: 1px solid #f0e1e1;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
   color: #7b2d2f;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid #7b2d2f;
 }
 
 .booking-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+  transform: translateY(-8px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .booking-card p {
-  margin: 5px 0;
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .pagination {
@@ -67,6 +82,11 @@
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.page-button:hover {
+  background-color: #5e2021;
 }
 
 .page-button.active {
@@ -76,17 +96,22 @@
 
 .tutoring-wrapper {
   display: flex;
-  align-items: center;     /* Vertical center */
-  height: 10vh;            /* Adjust as needed */
-  margin-left: 120px;      /* Keep horizontal offset */
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  margin-bottom: 20px;
 }
 
 .filter-buttons select {
   background: #fce088;
-  margin: 15px;
   padding: 8px;
-  font-size: 18px;
-  border-radius: 5px;
+  font-size: 16px;
+  border: 2px solid #7b2d2f;
+  border-radius: 8px;
   color: #7b2d2f;
-  width: 180px; /* Adjust this value as needed */
+  transition: background-color 0.5s ease;
+}
+
+.filter-buttons select:hover {
+  background: #ffd860;
 }
