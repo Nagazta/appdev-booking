@@ -368,7 +368,7 @@ function ManageSession() {
                           "No Payment"
                         ) : (
                           <>
-                            {session.paymentStatus} (${session.paymentAmount})
+                            {session.paymentStatus} (₱{session.paymentAmount})
                           </>
                         )}
                       </p>
@@ -443,7 +443,7 @@ function ManageSession() {
               {/* Only show amount field when status is "Completed" */}
               {paymentStatus === "Completed" && (
                 <div className="form-group">
-                  <label>Amount ($):</label>
+                  <label>Amount (₱):</label>
                   <input
                     type="number"
                     placeholder="Enter amount"

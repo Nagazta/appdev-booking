@@ -38,6 +38,20 @@ function HomeTutor() {
     setTutorName(storedName || "Tutor");
   }, []);
 
+  useEffect(() => {
+    const tutorId = localStorage.getItem("tutor_id"); // Ensure this is stored on login
+  
+    if (tutorId) {
+      fetch(`http://localhost:8080/payment/totalCompletedPayments/${tutorId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data !== null) setTotalPayments(data.toFixed(2));
+        })
+        .catch((error) => console.error("Error fetching total payments:", error));
+    }
+  }, []);
+  
+
   return (
     <div>
       <HeaderTutor />
@@ -55,7 +69,7 @@ function HomeTutor() {
               <p>{activeStudents}</p>
             </div>
             <div className="stat-card maroon">
-              <h3>Payments Received</h3>
+              <h3>Payments Total</h3>
               <p>₱{totalPayments}</p>
               </div>
 
