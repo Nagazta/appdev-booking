@@ -22,20 +22,39 @@ function UserManagement() {
 
   // Load students and apply overrides from localStorage
   useEffect(() => {
-    fetch("http://localhost:8080/student/all")
-      .then((res) => res.json())
-      .then((data) => {
-        const overrides = getStatusOverrides();
-        const updatedData = data.map((student) => ({
-          ...student,
-          status: overrides[student.student_id] || student.status || "Active",
-        }));
-        setStudents(updatedData);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch students:", err);
+  const fetchData = async () => {
+    try {
+      const studentRes = await fetch("http://localhost:8080/student/all");
+      const studentData = await studentRes.json();
+
+      const tutorRes = await fetch("http://localhost:8080/tutor/all");
+      const tutorData = await tutorRes.json();
+
+      const overrides = getStatusOverrides();
+
+      // Map tutors by student ID for fast lookup
+      const tutorMap = {};
+      tutorData.forEach((tutor) => {
+        tutorMap[tutor.student.student_id] = tutor;
       });
-  }, []);
+
+      // Combine data
+      const mergedData = studentData.map((student) => ({
+        ...student,
+        status: overrides[student.student_id] || student.status || "Active",
+        approvalStatus: tutorMap[student.student_id]?.approvalStatus || null,
+        tutor_id: tutorMap[student.student_id]?.tutor_id || null,
+      }));
+
+      setStudents(mergedData);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   // Modified handleStatusChange to show alert
   const handleStatusChange = (id, newStatus) => {
@@ -50,6 +69,28 @@ function UserManagement() {
     const fullName = `${changedUser.first_name} ${changedUser.middle_name || ""} ${changedUser.last_name}`;
     alert(`Status of ${fullName.trim()} has been changed to ${newStatus}.`);
   };
+  const handleApprovalChange = async (tutorId, newStatus) => {
+  try {
+    const res = await fetch(`http://localhost:8080/tutor/update/${tutorId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ approvalStatus: newStatus }),
+    });
+
+    if (res.ok) {
+      const updated = students.map((s) =>
+        s.tutor_id === tutorId ? { ...s, approvalStatus: newStatus } : s
+      );
+      setStudents(updated);
+      alert(`Tutor approval status updated to ${newStatus}`);
+    } else {
+      alert("Failed to update approval status");
+    }
+  } catch (err) {
+    console.error("Error updating approval status:", err);
+  }
+};
+
 
   const tutees = students.filter((s) => s.role === "Tutee");
   const tutors = students.filter((s) => s.role === "Tutor");
@@ -83,7 +124,7 @@ function UserManagement() {
 
         <div className="student-table-container">
           <table className="user-table">
-            <thead>
+           <thead>
               <tr>
                 <th>Student Name</th>
                 <th>Course</th>
@@ -91,8 +132,9 @@ function UserManagement() {
                 <th>Email</th>
                 <th>More</th>
                 <th>Status</th>
+                {activeList === "tutors" && <th>Approval</th>}
               </tr>
-            </thead>
+          </thead>
             <tbody>
               {users.length === 0 ? (
                 <tr>
@@ -106,16 +148,30 @@ function UserManagement() {
                     <td>{user.contact_number}</td>
                     <td>{user.email}</td>
                     <td className="view-more">View More</td>
-                    <td>
-                      <select
-                        className={`status-dropdown ${user.status?.toLowerCase() || "active"}`}
-                        value={user.status || "Active"}
-                        onChange={(e) => handleStatusChange(user.student_id, e.target.value)}
-                      >
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
-                      </select>
-                    </td>
+                   <td>
+                    <select
+                      className={`status-dropdown ${user.status?.toLowerCase() || "active"}`}
+                      value={user.status || "Active"}
+                      onChange={(e) => handleStatusChange(user.student_id, e.target.value)}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                      </td>
+
+                      {activeList === "tutors" && (
+                        <td>
+                          <select
+                            className={`approval-dropdown ${user.approvalStatus?.toLowerCase() || "pending"}`}
+                            value={user.approvalStatus || "Pending"}
+                            onChange={(e) => handleApprovalChange(user.tutor_id, e.target.value)}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                          </select>
+                        </td>
+                      )}
                   </tr>
                 ))
               )}

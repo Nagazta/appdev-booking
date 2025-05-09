@@ -115,7 +115,7 @@
     border: 1.5px solid #89343B;
     border-radius: 16px;
     padding: 20px;
-    width: 240px;
+    width: 450px;
     height: auto;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
     font-size: 14px;
@@ -131,7 +131,7 @@
 .card-btn-group {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
     margin-top: 12px;
 }
 
@@ -139,15 +139,16 @@
     background-color: #F8C400;
     color: #89343B;
     border: none;
-    padding: 10px 0;
-    border-radius: 10px;
+    padding: 14px 0; /* taller */
+    border-radius: 12px; /* slightly rounder */
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px; /* bigger font */
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
     flex: 1;
-    width: 100%;
+    width: 110px; /* fixed wider width */
+    min-width: 100px;
 }
 
 .card-btn:hover {

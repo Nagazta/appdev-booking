@@ -20,11 +20,12 @@
     padding: 10px 20px;
     width: 200px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.2s ease;
+    margin-left: 50px;
   }
   .view-button.active {
     background-color: #F8C400;
@@ -173,4 +174,25 @@
   .status-dropdown.inactive {
     background-color: red;
   }
-  
+  /* Approval status dropdown colors */
+.approval-dropdown {
+  padding: 5px;
+  border-radius: 4px;
+  font-weight: bold;
+  border: none;
+}
+
+.approval-dropdown.approved {
+  background-color: #d4edda; 
+  color: #155724; 
+}
+
+.approval-dropdown.rejected {
+  background-color: #f8d7da; 
+  color: #721c24; 
+}
+
+.approval-dropdown.pending {
+  background-color: #fff3cd; 
+  color: #856404; 
+}

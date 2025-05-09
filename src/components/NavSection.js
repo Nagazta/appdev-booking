@@ -8,6 +8,7 @@ function NavSection() {
     <div className="nav-section">
       <h1 className="wild-teach">WILD TEACH</h1>
       <button className="button-1"></button>
+      <button className="button-1"></button>
       <button><Link to="/">Home</Link></button>
       <button><Link to="/what-is">What is Wild Teach?</Link></button>
       <button><Link to="/about-us">About Us</Link></button>
