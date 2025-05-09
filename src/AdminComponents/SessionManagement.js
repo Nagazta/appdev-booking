@@ -36,7 +36,7 @@ const SessionManagement = () => {
 
         <div className="status-cards">
           <div className="card-yellow">
-            <h3>{countByStatus("Accepted")}</h3>
+            <h3>{countByStatus("Scheduled")}</h3>
             <p>Active Sessions</p>
           </div>
           <div className="card-yellow">

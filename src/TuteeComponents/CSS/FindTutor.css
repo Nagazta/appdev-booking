@@ -1,129 +1,136 @@
 .home-tutee-container {
-    position: relative;
-  }
-  
-  .find-tutor-container {
-    margin: 20px 50px 20px 120px; /* adjust for sidebar space */
-    padding: 25px;
-    border-radius: 10px;
-    color: maroon;
-  }
-  
-  .find-tutor-container h1 {
-    color:#8b0000;
-    margin: 0;
-    font-size: 2rem;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .find-tutor-container p {
-    margin-top: 5px;
-    color: rgb(111, 111, 4);
-    font-size: 1rem;
-    font-style: italic;
-  }
-  
-  .tutoring-schedule-container {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 2px solid #8b0000;
-    width: 70%;
-    border-radius: 20px;
-    
-  }
-  
-  h2 {
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 12px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-    display: inline-block;
-  } 
-  .find-tutor-card {
-    margin: 20px;
-  }
-  
-  .tutor-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-    color: #8b0000;
-  }
-  
-  .tutor-wrapper {
-    display: flex;
-    justify-content: center;  
-    align-items: center;      
-    height: 70vh;
-    margin: 0;               
-    margin-bottom: 60px; 
-  }
+  position: relative;
+}
 
-  .tutor-subject {  
-    font-size: 0.9rem;
-    color: gray;
-    margin-bottom: 10px;
-  }
+.find-tutor-container {
+  margin: 20px 50px 20px 120px; /* adjust for sidebar space */
+  padding: 25px;
+  border-radius: 10px;
+  color: maroon;
+  margin-bottom: -20px;
+}
 
-  .action-buttons {
-    display: flex;
-    gap: 0px;
-    align-items: center;
-  }
-  
-  .book-button {
-    margin-left: 20px;
-    white-space: nowrap;
-    background-color: #8b0000;
-    color: yellow;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    height: 45px;
-    width: 150px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  }
+.find-tutor-container h1 {
+  color: #8b0000;
+  margin: 0;
+  font-size: 2rem;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  margin-left: 70px;
+}
 
-  .profile-button {
-    background-color: #fffacd; /* Light yellow */
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    white-space: nowrap;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    height: 45px;
-    width: 150px;
-  }
-  
-  .profile-button:hover {
-    background-color: #ffe927;
-  }
+.find-tutor-container p {
+  margin-top: 5px;
+  color: rgb(111, 111, 4);
+  font-size: 1rem;
+  font-style: italic;
 
-  .tutor-details-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .tutor-details-text {
-    flex: 1;
-    margin-top: 15px;
-    margin-left: 20px;
-  }
-  
-  
-  .view-button:hover {
-    background-color: #a83232;
-  }
- 
-  .tutor-divider {
-    border: none;
-    border-top: 2px solid maroon;
-    margin: 20px 0;
-  }
-  
+}
+
+.tutoring-schedule-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #8b0000;
+  width: 70%;
+  border-radius: 20px;
+
+  /* 👇 added to make container scrollable */
+  max-height: 500px; /* adjust this height as needed */
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h2 {
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  display: inline-block;
+}
+
+.find-tutor-card {
+  margin: 20px;
+}
+
+.tutor-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #8b0000;
+}
+
+.tutor-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  margin: 0;
+  margin-bottom: 60px;
+}
+
+.tutor-subject {
+  font-size: 0.9rem;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0px;
+  align-items: center;
+}
+
+.book-button {
+  margin-left: 20px;
+  white-space: nowrap;
+  background-color: #8b0000;
+  color: yellow;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  height: 45px;
+  width: 150px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-button {
+  background-color: #fffacd; /* Light yellow */
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  height: 45px;
+  width: 150px;
+}
+
+.profile-button:hover {
+  background-color: #ffe927;
+}
+
+.tutor-details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tutor-details-text {
+  flex: 1;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+.view-button:hover {
+  background-color: #a83232;
+}
+
+.tutor-divider {
+  border: none;
+  border-top: 2px solid maroon;
+  margin: 20px 0;
+}

@@ -89,6 +89,7 @@ function HomeTutee() {
                 <span className="tutor-role">Tutor</span>
               </div>
               <div className="tutor-subject">Subject: {booking.subject}</div>
+              <p><strong>Status:</strong> {booking.status || 'N/A'}</p>
               <div className="tutor-date">
                 Date: {new Date(booking.sessionDateTime).toLocaleString()}
               </div>

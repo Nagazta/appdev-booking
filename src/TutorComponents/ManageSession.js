@@ -136,58 +136,108 @@ function ManageSession() {
       });
   };
 
-  const handleDelete = (bookingId) => {
-    if (window.confirm("Are you sure you want to delete this session?")) {
-      fetch(`http://localhost:8080/booking/delete/${bookingId}`, { 
-        method: "DELETE" 
-      })
-        .then((response) => {
-          if (!response.ok) throw new Error("Failed to delete session");
-          return response.text();
+const handleDelete = (bookingId) => {
+  if (window.confirm("Are you sure you want to delete this session?")) {
+    // Find the session in your state
+    const sessionToDelete = sessions.find(s => s.bookingId === bookingId);
+    
+    if (sessionToDelete && sessionToDelete.payment) {
+      // The session has a payment association
+      console.log("Session has payment association:", sessionToDelete.payment);
+      
+      // Try to find the payment ID from the allPayments array which might have the full data
+      const paymentDetails = allPayments.find(
+        p => p.booking && p.booking.bookingId === bookingId
+      );
+      
+      const paymentId = paymentDetails ? paymentDetails.payment_id : null;
+      
+      if (paymentId) {
+        console.log(`Found payment ID ${paymentId} from allPayments, deleting payment first...`);
+        
+        // Delete payment first
+        fetch(`http://localhost:8080/payment/delete/${paymentId}`, { method: "DELETE" })
+          .then((res) => {
+            if (!res.ok) {
+              console.error(`Payment deletion failed with status: ${res.status}`);
+              throw new Error(`Failed to delete payment. Status: ${res.status}`);
+            }
+            return res.text();
+          })
+          .then(() => {
+            console.log("✅ Payment deleted successfully, now deleting session...");
+            return fetch(`http://localhost:8080/booking/delete/${bookingId}`, { method: "DELETE" });
+          })
+          .then((res) => {
+            if (!res.ok) {
+              console.error(`Session deletion failed with status: ${res.status}`);
+              throw new Error("Failed to delete session.");
+            }
+            return res.text();
+          })
+          .then(() => {
+            console.log("✅ Session deleted successfully.");
+            fetchSessions(); // Refresh list
+          })
+          .catch((err) => {
+            console.error("❌ Error during deletion:", err);
+            alert(`Deletion failed: ${err.message}`);
+          });
+      } else {
+        // We need to handle this case - we know there's a payment but can't find the ID
+        console.error("Session has payment but no ID could be found");
+        alert("Cannot delete this session - it has a payment record but the payment ID cannot be determined. Please contact your administrator.");
+      }
+    } else {
+      // No payment → can delete session directly
+      fetch(`http://localhost:8080/booking/delete/${bookingId}`, { method: "DELETE" })
+        .then((res) => {
+          if (!res.ok) {
+            console.error(`Session deletion failed with status: ${res.status}`);
+            throw new Error("Failed to delete session.");
+          }
+          return res.text();
         })
         .then(() => {
-          console.log("✅ Session deleted successfully");
+          console.log("✅ Session deleted successfully.");
           fetchSessions();
         })
-        .catch((error) => {
-          console.error("❌ Error deleting session:", error);
-          alert("Failed to delete session. Please try again.");
+        .catch((err) => {
+          console.error("❌ Error deleting session:", err);
+          alert(`Failed to delete session: ${err.message}`);
         });
     }
-  };
+  }
+};
 
   const handleCancelEdit = () => {
     setEditingSession(null);
   };
 
-  const handleOpenPayment = (session) => {
-    console.log("Opening payment modal for session:", session);
-    setSelectedPayment(session);
-    
-    // Check if payment already exists for this booking
-    // Get **all payments** for this booking
-    const paymentsForBooking = allPayments.filter(
-      (p) => p.booking && p.booking.bookingId === selectedPayment.bookingId
-    );
+ const handleOpenPayment = (session) => {
+  console.log("Opening payment modal for session:", session);
+  setSelectedPayment(session);
+  
+  const paymentsForBooking = allPayments.filter(
+    (p) => p.booking && p.booking.bookingId === session.bookingId // 🟢 FIX HERE
+  );
 
-    // Pick the one with status not Completed, or fallback to the first one
-    const existingPayment = paymentsForBooking.find(p => p.status !== "Completed") || paymentsForBooking[0];
+  const existingPayment = paymentsForBooking.find(p => p.status !== "Completed") || paymentsForBooking[0];
 
-    
-    if (existingPayment) {
-      console.log("Existing payment found for this booking:", existingPayment);
-      setPaymentStatus(existingPayment.status);
-      setPaymentAmount(existingPayment.amount.toString());
-      setExistingPaymentId(existingPayment.payment_id); // Make sure we're using the correct property name
-    } else {
-      // Reset form for new payment
-      setPaymentStatus("");
-      setPaymentAmount("");
-      setExistingPaymentId(null);
-    }
-    
-    setShowPaymentModal(true);
-  };
+  if (existingPayment) {
+    console.log("Existing payment found for this booking:", existingPayment);
+    setPaymentStatus(existingPayment.status);
+    setPaymentAmount(existingPayment.amount.toString());
+    setExistingPaymentId(existingPayment.payment_id);
+  } else {
+    setPaymentStatus("");
+    setPaymentAmount("");
+    setExistingPaymentId(null);
+  }
+
+  setShowPaymentModal(true);
+};
+
 
   const handleSavePayment = () => {
     if (!paymentStatus) {
